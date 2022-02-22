@@ -17,10 +17,31 @@ func PostHomePage(c *gin.Context) {
 		"message": "Post Home Page",
 	})
 }
+
+func QueryStrings(c *gin.Context) {
+	name := c.Query("name") //name=parav
+	age := c.Query("age")
+
+	c.JSON(200, gin.H{
+		"name": name,
+		"age":  age,
+	})
+}
+func PathParameters(c *gin.Context) {
+	name := c.Param("name")
+	age := c.Param("age")
+
+	c.JSON(200, gin.H{
+		"name": name,
+		"age":  age,
+	})
+}
 func main() {
 	fmt.Println("Hello World!")
 	r := gin.Default()
 	r.GET("/", HomePage)
 	r.POST("/", PostHomePage)
+	r.GET("/query", QueryStrings)             // /query?name=parav&age=23
+	r.GET("/path/:name/:age", PathParameters) // /path/elliot/23
 	r.Run()
 }
