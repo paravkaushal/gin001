@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,8 +14,14 @@ func HomePage(c *gin.Context) {
 }
 
 func PostHomePage(c *gin.Context) {
+
+	body := c.Request.Body
+	value, err := ioutil.ReadAll(body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	c.JSON(200, gin.H{
-		"message": "Post Home Page",
+		"message": string(value),
 	})
 }
 
